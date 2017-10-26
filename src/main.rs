@@ -21,16 +21,11 @@ impl BBS {
             || ((x0 % q) == 0)
             || ((p % 4) != 3)
             || ((q % 4) != 3)
-        {
-            return None;
-        }
-        let m = p*q;
-        Some(Self {
-            p: p,
-            q: q,
-            x: x0 % m,
-            m: m,
-        })
+            {
+                return None;
+            }
+        let m = p * q;
+        Some(Self { p, q, x: x0 % m, m })
     }
     fn next(&mut self) -> u32 {
         self.x = self.x.wrapping_mul(self.x) % self.m;
@@ -65,7 +60,7 @@ struct StatChar {
 
 impl StatChar {
     fn calc<T>(gen: &mut T, count: usize) -> Self
-    where T: Iterator<Item = u32> + Clone {
+        where T: Iterator<Item=u32> + Clone {
         let _gen = gen.clone();
         let mut sum_m = 0u32;
         for i in _gen.take(count) {
@@ -86,10 +81,7 @@ impl StatChar {
             sum_d += s * s;
         }
         let d = sum_d / (f_count * max * max);
-        Self {
-            m: m,
-            d: d,
-        }
+        Self { m, d }
     }
 }
 
@@ -99,7 +91,7 @@ impl Display for StatChar {
         if r.is_err() { return r; }
         r = writeln!(formatter, "  Math expecting: {}", self.m);
         if r.is_err() { return r; }
-        writeln!(formatter, "  Disperce: {}", self.d)
+        writeln!(formatter, "  Disperse: {}", self.d)
     }
 }
 
